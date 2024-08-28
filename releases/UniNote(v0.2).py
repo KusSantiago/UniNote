@@ -301,8 +301,11 @@ GoToDialog_info_lb_confDitc = {
 # ------------------- / ------------------- / ------------------- / ---
 
 # ------------------- Declaración de Funciones ------------------------
+dirpath = ''
+
 def dirSetUp():
     #Se obtiene un camino que expande de los documentos del usuario a la raiz
+    global dirpath
     dirpath = os.path.expanduser('~/Documents/UniNote/')
 
     #Se comprueba si existe el directorio o no
@@ -319,7 +322,8 @@ def dirSetUp():
 # ------------------- Definición de Clase Administrador de Archivos ---
 class FileManager:
     def __init__(self):
-        self.DocDirPath: str = 'docs/'
+        global dirpath
+        self.DocDirPath: str = dirpath
 
     def listFiles(self) -> list[str]:
         try:
@@ -1286,17 +1290,16 @@ class HomeWindow:
             #Si no ingreso una cadena se acaba la ejecución
             return
 
-        #Se cierra el archivo por seguridad
+        #Se cierra el archivo por seguridad##
         file.close()
 
         #Se corta el nombre del archivo del nombre del camino que se deriva
-        if file.name.find(self.fmanager.DocDirPath) > 0:
-            filename = file.name.partition(self.fmanager.DocDirPath)[2]         
-            filename = filename.removesuffix('.txt')
+        # filename = file.name.removeprefix(self.fmanager.DocDirPath)        
+        # filename = filename.removesuffix('.txt')
 
         #Se agrega a la lista de notas y se actualiza la listbox para representarla
-        self.notes.append(filename)
-        self.body.insert(len(self.notes) - 1, filename)
+        self.notes = self.fmanager.listFiles()
+        self.body.insert(len(self.notes) - 1,self.notes[len(self.notes) - 1])
 
         #print(filename)
 
