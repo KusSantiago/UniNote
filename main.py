@@ -11,11 +11,22 @@
 
 # ------------------- Imports -----------------------------------------
 import tkinter as tk
+import os
+
+from tkinter import ttk
+from tkinter import filedialog
+
+from source.app_conf import *
+from source.file_manager import FileManager
+from source.app_setup import dirSetUp
+from source.home_window import HomeWindow
 
 
 # ------------------- Función Principal -------------------------------
 def main():
-    pass
+    dirSetUp()
+
+    homw_window = HomeWindow()
 
 # ------------------- Inicio de la Función Principal ------------------
 if __name__ == '__main__':
